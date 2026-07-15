@@ -1,0 +1,13 @@
+.git
+.github
+.env
+.venv
+__pycache__
+.pytest_cache
+.ipynb_checkpoints
+tests
+data/chroma
+data/index_manifest.json
+*.csv
+*.pdf
+*:Zone.Identifier

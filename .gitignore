@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+
+# Data and generated vector index
+data/*
+!data/.gitkeep
+*.csv
+*.parquet
+
+# Notebook and editor artifacts
+.ipynb_checkpoints/
+.vscode/
+.idea/
+*:Zone.Identifier
+
+# OS
+.DS_Store
