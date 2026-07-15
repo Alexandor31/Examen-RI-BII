@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -88,6 +89,34 @@ def render_result(result: RAGResult) -> None:
     render_evidence(result.evidence)
 
 
+def load_streamlit_secrets() -> None:
+    """Expose Streamlit Cloud secrets through the existing environment config."""
+    try:
+        secrets = st.secrets
+    except Exception:
+        # Local runs without .streamlit/secrets.toml do not have Streamlit secrets.
+        return
+
+    names = (
+        "LLM_API_KEY",
+        "GROQ_API_KEY",
+        "LLM_API_BASE",
+        "LLM_MODEL",
+        "MAX_DOCUMENTS",
+        "AUTO_BUILD_INDEX",
+    )
+    for name in names:
+        if os.getenv(name):
+            continue
+        try:
+            value = secrets[name]
+        except KeyError:
+            continue
+        if value is not None:
+            os.environ[name] = str(value)
+
+
+load_streamlit_secrets()
 settings = Settings.from_env()
 
 with st.sidebar:
